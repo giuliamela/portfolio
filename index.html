@@ -1,0 +1,658 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Giulia Mela — Data Science Portfolio</title>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    :root {
+      --bg: #f8f7f4;
+      --bg-card: #ffffff;
+      --bg-sec: #f1efe8;
+      --text: #1a1a18;
+      --text-sec: #5f5e5a;
+      --text-ter: #888780;
+      --border: rgba(26,26,24,0.12);
+      --border-sec: rgba(26,26,24,0.22);
+      --accent: #185fa5;
+      --accent-bg: #e6f1fb;
+      --radius-md: 8px;
+      --radius-lg: 12px;
+    }
+
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --bg: #1a1a18;
+        --bg-card: #222220;
+        --bg-sec: #2c2c2a;
+        --text: #f1efe8;
+        --text-sec: #b4b2a9;
+        --text-ter: #888780;
+        --border: rgba(241,239,232,0.12);
+        --border-sec: rgba(241,239,232,0.22);
+        --accent: #85b7eb;
+        --accent-bg: #042c53;
+      }
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      font-family: 'DM Sans', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    .wrap {
+      width: 100%;
+      max-width: 920px;
+      margin: 0 auto;
+      padding: 2rem 2rem 3rem;
+    }
+
+    .hero {
+      padding: 2.5rem 0 2rem;
+      border-bottom: 0.5px solid var(--border);
+      margin-bottom: 2.25rem;
+    }
+
+    .badge {
+      display: inline-block;
+      font-family: 'DM Mono', monospace;
+      font-size: 11px;
+      letter-spacing: 0.08em;
+      color: var(--accent);
+      background: var(--accent-bg);
+      padding: 4px 10px;
+      border-radius: 4px;
+      margin-bottom: 1.25rem;
+    }
+
+    .hero h1 {
+      font-size: 32px;
+      font-weight: 300;
+      line-height: 1.2;
+      margin-bottom: 1.25rem;
+      letter-spacing: -0.02em;
+    }
+
+    .hero h1 strong {
+      font-weight: 500;
+    }
+
+    .about {
+      display: flex;
+      align-items: center;
+      gap: 2rem;
+    }
+
+    .about-img img {
+      width: 150px;
+      height: 150px;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 1px solid var(--border);
+      flex-shrink: 0;
+    }
+
+    .about-text {
+      flex: 1;
+      min-width: 0;
+    }
+
+    .about-text h2 {
+      font-size: 18px;
+      font-weight: 500;
+      margin-bottom: 0.75rem;
+    }
+
+    .about-text p {
+      font-size: 14px;
+      color: var(--text-sec);
+      line-height: 1.75;
+      margin-bottom: 0.75rem;
+    }
+
+    .about-text p:last-of-type {
+      margin-bottom: 1rem;
+    }
+
+    .sec-label {
+      font-size: 11px;
+      font-family: 'DM Mono', monospace;
+      letter-spacing: 0.12em;
+      color: var(--text-ter);
+      text-transform: uppercase;
+      margin-bottom: 1rem;
+    }
+
+    .projects {
+      display: flex;
+      flex-direction: column;
+      gap: 1px;
+      border: 0.5px solid var(--border);
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+      background: var(--border);
+    }
+
+    .project {
+      background: var(--bg-card);
+      transition: background 0.15s;
+    }
+
+    .project:hover {
+      background: var(--bg-sec);
+    }
+
+    .proj-head {
+      display: flex;
+      align-items: flex-start;
+      gap: 1rem;
+      padding: 1.5rem 1.5rem 0;
+      cursor: pointer;
+    }
+
+    .proj-num {
+      font-family: 'DM Mono', monospace;
+      font-size: 12px;
+      color: var(--text-ter);
+      min-width: 24px;
+      padding-top: 3px;
+      flex-shrink: 0;
+    }
+
+    .proj-titles {
+      flex: 1;
+      min-width: 0;
+    }
+
+    .proj-title {
+      font-size: 17px;
+      font-weight: 500;
+      line-height: 1.3;
+      margin-bottom: 3px;
+    }
+
+    .proj-subtitle {
+      font-size: 13px;
+      color: var(--text-sec);
+    }
+
+    .proj-course {
+      font-size: 11px;
+      font-family: 'DM Mono', monospace;
+      color: var(--text-ter);
+      margin-top: 4px;
+    }
+
+    .toggle-btn {
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      border: 0.5px solid var(--border);
+      background: transparent;
+      color: var(--text-sec);
+      font-size: 18px;
+      line-height: 1;
+      cursor: pointer;
+      flex-shrink: 0;
+      transition: transform 0.2s, background 0.15s;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .toggle-btn.open {
+      transform: rotate(45deg);
+    }
+
+    .proj-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      padding: 0.875rem 1.5rem 1rem 3.5rem;
+    }
+
+    .tag {
+      font-size: 11px;
+      font-family: 'DM Mono', monospace;
+      padding: 3px 9px;
+      border-radius: 4px;
+      font-weight: 500;
+      max-width: 100%;
+      word-break: break-word;
+    }
+
+    .t-etl { background: #e1f5ee; color: #085041; }
+    .t-sql { background: #eaf3de; color: #27500a; }
+    .t-olap { background: #fbeaf0; color: #72243e; }
+    .t-py { background: #eaf3de; color: #3b6d11; }
+    .t-dm { background: #eeedfe; color: #3c3489; }
+    .t-ml { background: #e6f1fb; color: #0c447c; }
+    .t-sp { background: #faeeda; color: #633806; }
+    .t-xai { background: #faece7; color: #712b13; }
+    .t-ts { background: #e1f5ee; color: #0f6e56; }
+
+    @media (prefers-color-scheme: dark) {
+      .t-etl { background: #085041; color: #9fe1cb; }
+      .t-sql { background: #27500a; color: #c0dd97; }
+      .t-olap { background: #72243e; color: #f4c0d1; }
+      .t-py { background: #3b6d11; color: #c0dd97; }
+      .t-dm { background: #3c3489; color: #cecbf6; }
+      .t-ml { background: #0c447c; color: #b5d4f4; }
+      .t-sp { background: #633806; color: #fac775; }
+      .t-xai { background: #712b13; color: #f5c4b3; }
+      .t-ts { background: #085041; color: #9fe1cb; }
+    }
+
+    .proj-body {
+      display: none;
+      padding: 1.25rem 1.5rem 1.5rem;
+    }
+
+    .proj-body.open {
+      display: block;
+    }
+
+    .proj-desc {
+      font-size: 14px;
+      line-height: 1.8;
+      color: var(--text-sec);
+      margin-bottom: 1.25rem;
+    }
+
+    .proj-footer {
+      display: flex;
+      gap: 8px;
+      padding-top: 1rem;
+      border-top: 0.5px solid var(--border);
+      flex-wrap: wrap;
+    }
+
+    .link-btn {
+      font-size: 13px;
+      padding: 7px 14px;
+      border-radius: var(--radius-md);
+      border: 0.5px solid var(--border-sec);
+      background: transparent;
+      color: var(--text);
+      text-decoration: none;
+      font-family: 'DM Sans', sans-serif;
+      transition: background 0.15s;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .link-btn:hover {
+      background: var(--bg-sec);
+    }
+
+    .footer {
+      margin-top: 3rem;
+      padding-top: 1.5rem;
+      border-top: 0.5px solid var(--border);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      gap: 0.75rem;
+    }
+
+    .footer-info {
+      font-size: 13px;
+      color: var(--text-ter);
+      font-family: 'DM Mono', monospace;
+    }
+
+    .footer-links {
+      display: flex;
+      gap: 10px;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+
+    .footer-link {
+      font-size: 13px;
+      color: var(--accent);
+      text-decoration: none;
+      border: 0.5px solid var(--border);
+      padding: 6px 14px;
+      border-radius: var(--radius-md);
+      transition: background 0.15s;
+    }
+
+    .footer-link:hover {
+      background: var(--bg-sec);
+    }
+
+    @media (max-width: 700px) {
+      .wrap {
+        padding: 1.5rem 1rem 2rem;
+      }
+
+      .hero {
+        padding: 2rem 0 1.75rem;
+        margin-bottom: 1.75rem;
+      }
+
+      .hero h1 {
+        font-size: 26px;
+      }
+
+      .about {
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+      }
+
+      .about-text {
+        max-width: 100%;
+      }
+
+      .proj-head {
+        padding: 1.25rem 1rem 0;
+      }
+
+      .proj-tags {
+        padding: 0.75rem 1rem 1rem 1rem;
+      }
+
+      .proj-body {
+        padding: 1rem;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .hero h1 {
+        font-size: 23px;
+      }
+
+      .about-img img {
+        width: 104px;
+        height: 104px;
+      }
+
+      .proj-title {
+        font-size: 16px;
+      }
+
+      .proj-subtitle {
+        font-size: 12px;
+      }
+
+      .proj-course {
+        font-size: 10px;
+      }
+
+      .footer-info {
+        font-size: 12px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+
+    <header class="hero">
+      <div class="badge">MSc in Data Science and Business Informatics · University of Pisa</div>
+      <h1><strong>Giulia Mela</strong> — Portfolio</h1>
+
+      <div class="about">
+        <div class="about-img">
+          <img src="foto.jpg" alt="Giulia Mela" />
+        </div>
+
+        <div class="about-text">
+          <h2>About me</h2>
+          <p>
+            I graduated in Digital Humanities (Informatica Umanistica) in 2024 from the University of Pisa,
+            and I am currently a Master's student in Data Science and Business Informatics.
+          </p>
+
+          <p>
+            This portfolio collects the main projects I have developed during my studies, covering topics such as machine learning, data mining, business intelligence, and large-scale data analysis.
+          </p>
+        </div>
+      </div>
+    </header>
+
+    <div class="sec-label">Selected projects</div>
+
+    <div class="projects">
+
+      <div class="project" id="p1">
+        <div class="proj-head" onclick="toggle(1)">
+          <span class="proj-num">01</span>
+          <div class="proj-titles">
+            <div class="proj-title">Business Intelligence System for Music Streaming</div>
+            <div class="proj-subtitle">Data Warehousing · ETL · OLAP · Visual Analytics</div>
+            <div class="proj-course">Decision Support Systems · A.Y. 2025/2026</div>
+          </div>
+          <button class="toggle-btn" id="btn1" aria-label="Expand project 1">+</button>
+        </div>
+
+        <div class="proj-tags">
+          <span class="tag t-py">Python</span>
+          <span class="tag t-py">pandas</span>
+          <span class="tag t-sql">SQL Server</span>
+          <span class="tag t-sql">T-SQL</span>
+          <span class="tag t-etl">SSIS</span>
+          <span class="tag t-olap">SSAS</span>
+          <span class="tag t-olap">MDX</span>
+          <span class="tag t-ml">Power BI</span>
+        </div>
+
+        <div class="proj-body" id="body1">
+          <p class="proj-desc">
+            End-to-end design and implementation of a Business Intelligence system for a music streaming platform, starting from heterogeneous data sources (JSON and XML).
+            The project covers data preprocessing and enrichment in Python, dimensional modeling and data warehouse design in SQL Server, automated ETL pipelines developed with SSIS, and a multidimensional OLAP cube implemented with SSAS and integrated with Power BI for interactive data analysis.
+          </p>
+
+          <div class="proj-footer">
+            <a href="https://github.com/giuliamela/decision_support_system_25-26" class="link-btn" target="_blank">GitHub →</a>
+          </div>
+        </div>
+      </div>
+
+      <!--PROJECT 2-->
+      <div class="project" id="p2">
+      <div class="proj-head" onclick="toggle(2)">
+        <span class="proj-num">02</span>
+        <div class="proj-titles">
+          <div class="proj-title">Large-Scale Analysis of US Traffic Accidents (2016–2023)</div>
+          <div class="proj-subtitle">Distributed Data Analysis · Data Mining · Explainability</div>
+          <div class="proj-course">Distributed Data Analysis and Mining · A.Y. 2025/2026</div>
+        </div>
+        <button class="toggle-btn" id="btn2" aria-label="Expand project 2">+</button>
+      </div>
+
+      <div class="proj-tags">
+        <span class="tag t-sp">PySpark</span>
+        <span class="tag t-py">Python</span>
+        <span class="tag t-ml">MLlib</span>
+        <span class="tag t-dm">Clustering</span>
+        <span class="tag t-ml">Classification</span>
+        <span class="tag t-ml">Regression</span>
+        <span class="tag t-xai">XAI</span>
+      </div>
+
+      <div class="proj-body" id="body2">
+        <p class="proj-desc">
+          Project developed for the Distributed Data Analysis and Mining course, focused on the analysis of a large-scale US traffic accidents dataset (2016–2023) using PySpark.
+
+          The work follows a complete data mining pipeline, including data preparation, clustering, classification, regression, and explainable AI techniques to explore patterns and support predictive analysis.
+        </p>
+
+        <div class="proj-footer">
+          <a href="https://github.com/giuliamela/distributed_data_analysis_and_mining_25-26/tree/main" class="link-btn" target="_blank">GitHub →</a>
+        </div>
+      </div>
+    </div>
+
+      <div class="project" id="p3">
+        <div class="proj-head" onclick="toggle(3)">
+          <span class="proj-num">03</span>
+          <div class="proj-titles">
+            <div class="proj-title">Advanced Data Mining on IMDb Dataset (DM2)</div>
+            <div class="proj-subtitle">Outlier Detection · Imbalanced Learning · Time Series · Explainability</div>
+            <div class="proj-course">Data Mining: Advanced Topics and Applications · A.Y. 2024/2025</div>
+          </div>
+          <button class="toggle-btn" id="btn3" aria-label="Expand project 3">+</button>
+        </div>
+
+        <div class="proj-tags">
+          <span class="tag t-py">Python</span>
+          <span class="tag t-dm">Data Mining</span>
+          <span class="tag t-ml">Machine Learning</span>
+          <span class="tag t-ts">Time Series</span>
+          <span class="tag t-xai">XAI</span>
+        </div>
+
+        <div class="proj-body" id="body3">
+          <p class="proj-desc">
+            Advanced data mining project on IMDb datasets, including both structured data and time series data.
+            The project covers data preprocessing and feature selection, outlier detection using multiple methods, and handling of imbalanced data through resampling techniques.
+            Several machine learning models were developed for classification and regression tasks, alongside time series analysis including anomaly detection, clustering, and pattern discovery.
+            The final part focuses on model interpretability through explainable AI techniques.
+          </p>
+
+          <div class="proj-footer">
+            <a href="https://github.com/giuliamela/Data_Mining2/tree/main" class="link-btn" target="_blank">GitHub →</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- PROJECT 04 -->
+    <div class="project" id="p4">
+      <div class="proj-head" onclick="toggle(4)">
+        <span class="proj-num">04</span>
+        <div class="proj-titles">
+          <div class="proj-title">Data Mining on IMDb Dataset (DM1)</div>
+          <div class="proj-subtitle">Data Preparation · Clustering · Classification · Regression</div>
+          <div class="proj-course">Data Mining: Foundations · A.Y. 2024/2025</div>
+        </div>
+        <button class="toggle-btn" id="btn4" aria-label="Expand project 4">+</button>
+      </div>
+
+      <div class="proj-tags">
+        <span class="tag t-py">Python</span>
+        <span class="tag t-dm">Data Mining</span>
+        <span class="tag t-ml">Machine Learning</span>
+        <span class="tag t-dm">Clustering</span>
+        <span class="tag t-ml">Classification</span>
+        <span class="tag t-ml">Regression</span>
+      </div>
+
+      <div class="proj-body" id="body4">
+        <p class="proj-desc">
+          Data mining project on an IMDb dataset including movies, TV series, and other audiovisual content.
+
+          The project starts with data understanding and preprocessing, including handling missing values,
+          feature selection, and transformation of variables to improve data quality.
+
+          Several clustering techniques were applied to explore the structure of the dataset, alongside
+          classification models for predicting content categories and regression analysis on numerical targets.
+
+          The project also includes pattern discovery and evaluation of different algorithms to compare their
+          effectiveness on real-world data.
+        </p>
+
+        <div class="proj-footer">
+          <a href="https://github.com/giuliamela/Data_Mining1" class="link-btn" target="_blank">GitHub →</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- PROJECT 05 -->
+    <div class="project" id="p5">
+      <div class="proj-head" onclick="toggle(5)">
+        <span class="proj-num">05</span>
+        <div class="proj-titles">
+          <div class="proj-title">Predictive Analysis of Financial Performance (Automotive)</div>
+          <div class="proj-subtitle">Machine Learning · Forecasting · Financial Analysis</div>
+          <div class="proj-course">Fundamentals of Business Management · A.Y. 2024/2025</div>
+        </div>
+        <button class="toggle-btn" id="btn5" aria-label="Expand project 5">+</button>
+      </div>
+
+      <div class="proj-tags">
+        <span class="tag t-py">Python</span>
+        <span class="tag t-ml">Machine Learning</span>
+        <span class="tag t-dm">Forecasting</span>
+        <span class="tag t-ml">Regression</span>
+        <span class="tag t-dm">Data Analysis</span>
+        <span class="tag t-ml">Financial KPIs</span>
+      </div>
+
+      <div class="proj-body" id="body5">
+        <p class="proj-desc">
+          Predictive analysis project focused on financial performance in the automotive industry, 
+          using Ferrari as a case study.
+
+          The project includes data collection and preprocessing of historical financial data, 
+          followed by the application of machine learning techniques to forecast key financial 
+          metrics for 2024.
+
+          The analysis covers revenue, costs, cash flows, and inventory trends, along with the 
+          estimation of key performance indicators (KPIs) and financial ratios such as ROA, ROE, 
+          and ROI.
+
+          A comparative analysis with major competitors was also conducted to evaluate market 
+          positioning and identify strategic insights for future performance.
+        </p>
+
+        <div class="proj-footer">
+          <a href="https://github.com/giuliamela" class="link-btn" target="_blank">GitHub →</a>
+        </div>
+      </div>
+    </div>
+
+    </div>
+
+    <footer class="footer">
+      <span class="footer-info">Giulia Mela · 618133 · MSc DSBI · UniPi · 2024–2026</span>
+      <div class="footer-links">
+        <a href="https://github.com/giuliamela" class="footer-link" target="_blank">GitHub</a>
+        <a href="https://www.linkedin.com/in/giulia-mela-8009a427a/" class="footer-link" target="_blank">LinkedIn</a>
+        <a href="mailto:giulia-mela@live.it" class="footer-link">Email</a>
+      </div>
+    </footer>
+
+  </div>
+
+  <script>
+    function toggle(id) {
+      const body = document.getElementById('body' + id);
+      const btn = document.getElementById('btn' + id);
+      const isOpen = body.classList.contains('open');
+
+      document.querySelectorAll('.proj-body').forEach(b => b.classList.remove('open'));
+      document.querySelectorAll('.toggle-btn').forEach(b => {
+        b.classList.remove('open');
+        b.textContent = '+';
+      });
+
+      if (!isOpen) {
+        body.classList.add('open');
+        btn.classList.add('open');
+        btn.textContent = '×';
+      }
+    }
+  </script>
+</body>
+</html>
