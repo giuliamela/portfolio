@@ -1,1 +1,1 @@
-This is my portfolio: https://giuliamela.github.io/portfolioGM/
+This is my portfolio: https://giuliamela.github.io/portfolio/
